@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use DB;
+use Illuminate\Support\Facades\DB;
+
 class MahasiswaSeeder extends Seeder
 {
     /**
@@ -13,12 +14,23 @@ class MahasiswaSeeder extends Seeder
      */
     public function run()
     {
-        //DB::insert([
-          //  'nim' => '1941720150',
-            //'nama' => 'Octavia',
-            //'kelas' => 'TI-2C',
-            //'jurusan' => 'JTI',
-            //'no_handphone' => '0812222',
-        //]);
+        $data = [
+            [
+                'nim' => '1941720150',
+                'nama' => 'Octavia',
+                'kelas' => 'TI-2C',
+                'jurusan' => 'JTI',
+                'no_handphone' => '08123243'
+            ],
+            [
+                'nim' => '198676790',
+                'nama' => 'Alya',
+                'kelas' => 'TI-2C',
+                'jurusan' => 'JTI',
+                'no_handphone' => '086786767'
+            ]
+            ];
+
+        DB::table('mahasiswas')->insert($data);
     }
 }
