@@ -1,61 +1,133 @@
-@extends('mahasiswas.layout')
+<?php
 
-@section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left mt-2" style="text-align: center">
-                <h2>JURUSAN TEKNOLOGI INFORMASI-POLITEKNIK NEGERI MALANG</h2>
-            </div>
-            <div class="float-left my-2">
-                {{ $posts->links() }}
-            </div>
-            <div class="float-right my-2">
-                <a class="btn btn-success" href="{{ route('mahasiswa.create') }}"> Input Mahasiswa</a>
-            </div>
-            <form method="get" action="/search" id="myForm">
-                <div class="float-right my-2" style="margin-right:20px;">
-                    <button type="submit" class="btn btn-primary">Cari</button>
-                </div>
-                <div class="float-right my-2">
-                    <input type="cari" name="cari" class="form-control" id="cari" aria-describedby="cari" >
-                </div>
-            </form>
-            <div class="float-right my-3" style="margin-right:20px;><label for="cari">Cari</label></div>
-        </div>
-    </div>
- @if ($message = Session::get('success'))
-    <div class="alert alert-success">
-        <p>{{ $message }}</p>
-    </div>
- @endif
- <table class="table table-bordered">
-    <tr>
-        <th>Nim</th>
-        <th>Nama</th>
-        <th>Kelas</th>
-        <th>Jurusan</th>
-        <th>No_Handphone</th>
-        <th width="280px">Action</th>
-    </tr>
-    @foreach ($posts as $Mahasiswa)
-    <tr>
-        <td>{{ $Mahasiswa->nim }}</td>
-        <td>{{ $Mahasiswa->nama }}</td>
-        <td>{{ $Mahasiswa->kelas }}</td>
-        <td>{{ $Mahasiswa->jurusan }}</td>
-        <td>{{ $Mahasiswa->no_handphone }}</td>
-        <td>
-            <form action="{{ route('mahasiswa.destroy', $Mahasiswa->nim) }}" method="POST">
-                <a class="btn btn-info" href="{{ route('mahasiswa.show', $Mahasiswa->nim) }}">Show</a>
-                <a class="btn btn-primary" href="{{ route('mahasiswa.edit', $Mahasiswa->nim) }}">Edit</a>
-        @csrf
-        @method('DELETE')
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </td>
-    </tr>
- @endforeach
- <div>
-</div>
- </table>
-@endsection
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Mahasiswa;
+use Illuminate\Support\Facades\DB;
+class MahasiswaController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //$mahasiswa=Mahasiswa::all()->paginate(1);
+        // Mengambil semua isi tabel
+        $posts=Mahasiswa::orderBy('nim','asc')->paginate(5);
+        //return view('mahasiswas.index',compact('mahasiswa','posts'))->with('i',(request()->input('page',1)-1)*5);
+        return view('mahasiswas.index',compact('posts'))->with('i',(request()->input('page',1)-1)*5);
+    }
+
+    /*
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('mahasiswas.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate(['nim'=>'required',
+        'nama'=>'required',
+        'kelas'=>'required',
+        'jurusan'=>'required',
+        'no_handphone'=>'required',
+        'email'=>'required',
+        'tgl_lahir'=>'required'
+        ]);
+        //fungsieloquentuntukmenambahdata
+        Mahasiswa::create($request->all());
+        //jikadataberhasilditambahkan,akankembalikehalamanutama
+        return redirect()->route('mahasiswa.index')->with('success','Mahasiswa Berhasil Ditambahkan');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($nim)
+    {
+        $mahasiswa=Mahasiswa::find($nim);
+        return view('mahasiswas.detail',compact('mahasiswa'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($nim)
+    {
+        $mahasiswa=Mahasiswa::find($nim);
+        return view('mahasiswas.edit',compact('mahasiswa'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $nim)
+    {
+        $request->validate(['nim'=>'required',
+        'nama'=>'required',
+        'kelas'=>'required',
+        'jurusan'=>'required',
+        'no_handphone'=>'required',
+        'email'=>'required',
+        'tgl_lahir'=>'required'
+        ]);
+        Mahasiswa::find($nim)->update($request->all());
+        return redirect()->route('mahasiswa.index')->with('success','Mahasiswa Berhasil Diupdate');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($nim)
+    {
+        Mahasiswa::find($nim)->delete();
+        return redirect()->route('mahasiswa.index')->with('success','Mahasiswa Berhasil  Dihapus');
+    }
+
+    public function cari (Request $request)
+    {
+
+        $cari = $request -> get ('cari');
+        $post = DB::table('mahasiswa')->where('nama','like','%'.$cari.'%')->paginate(5);
+        return view('mahasiswas.index',['posts' => $post]);
+
+         /*
+        // 2 variabel
+        $posts = Mahasiswa::when($request->keyword, function ($query) use ($request) {
+            $query->where('nama', 'like', "%{$request->keyword}%")
+                ->orWhere('nim', 'like', "%{$request->keyword}%");
+        })->paginate(5);
+        return view('mahasiswas.index',compact('posts'));
+        */
+    }
+
+
+
+}
