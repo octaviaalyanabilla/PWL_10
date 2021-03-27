@@ -13,6 +13,12 @@ class MahasiswaSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::insert([
+            'nim' => '1941720150',
+            'nama' => 'Octavia',
+            'kelas' => 'TI-2C',
+            'jurusan' => 'JTI',
+            'no_handphone' => '0812222',
+        ]);
     }
 }
