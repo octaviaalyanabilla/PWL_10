@@ -12,7 +12,6 @@ class Mahasiswa extends Model
 {
     use HasFactory;
 
-    protected $table='mahasiswa';
     protected $primaryKey = 'nim';
     protected $keyType = 'string';
     public $incrementing = false;

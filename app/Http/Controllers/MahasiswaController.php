@@ -14,11 +14,11 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        //$mahasiswa=Mahasiswa::all()->paginate(1);
+        $mahasiswa=Mahasiswa::all();
         // Mengambil semua isi tabel
         $posts=Mahasiswa::orderBy('nim','asc')->paginate(5);
         //return view('mahasiswas.index',compact('mahasiswa','posts'))->with('i',(request()->input('page',1)-1)*5);
-        return view('mahasiswas.index',compact('posts'))->with('i',(request()->input('page',1)-1)*5);
+        return view('mahasiswas.index',compact('mahasiswa','posts'))->with('i',(request()->input('page',1)-1)*5);
     }
 
     /*
@@ -51,7 +51,7 @@ class MahasiswaController extends Controller
         //fungsieloquentuntukmenambahdata
         Mahasiswa::create($request->all());
         //jikadataberhasilditambahkan,akankembalikehalamanutama
-        return redirect()->route('mahasiswa.index')->with('success','Mahasiswa Berhasil Ditambahkan');
+        return redirect()->route('mahasiswas.index')->with('success','Mahasiswa Berhasil Ditambahkan');
     }
 
     /**
@@ -96,7 +96,7 @@ class MahasiswaController extends Controller
         'tgl_lahir'=>'required'
         ]);
         Mahasiswa::find($nim)->update($request->all());
-        return redirect()->route('mahasiswa.index')->with('success','Mahasiswa Berhasil Diupdate');
+        return redirect()->route('mahasiswas.index')->with('success','Mahasiswa Berhasil Diupdate');
     }
 
     /**
@@ -108,14 +108,14 @@ class MahasiswaController extends Controller
     public function destroy($nim)
     {
         Mahasiswa::find($nim)->delete();
-        return redirect()->route('mahasiswa.index')->with('success','Mahasiswa Berhasil  Dihapus');
+        return redirect()->route('mahasiswas.index')->with('success','Mahasiswa Berhasil  Dihapus');
     }
 
     public function cari (Request $request)
     {
 
         $cari = $request -> get ('cari');
-        $post = DB::table('mahasiswa')->where('nama','like','%'.$cari.'%')->paginate(5);
+        $post = DB::table('mahasiswas')->where('nama','like','%'.$cari.'%')->paginate(5);
         return view('mahasiswas.index',['posts' => $post]);
 
          /*

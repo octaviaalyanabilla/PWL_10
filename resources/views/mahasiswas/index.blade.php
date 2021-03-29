@@ -27,26 +27,31 @@
         <p>{{ $message }}</p>
     </div>
  @endif
- <table class="table table-bordered">
-    <tr>
-        <th>Nim</th>
-        <th>Nama</th>
-        <th>Kelas</th>
-        <th>Jurusan</th>
-        <th>No_Handphone</th>
-        <th width="280px">Action</th>
-    </tr>
-    @foreach ($posts as $Mahasiswa)
-    <tr>
-        <td>{{ $Mahasiswa->nim }}</td>
-        <td>{{ $Mahasiswa->nama }}</td>
-        <td>{{ $Mahasiswa->kelas }}</td>
-        <td>{{ $Mahasiswa->jurusan }}</td>
-        <td>{{ $Mahasiswa->no_handphone }}</td>
-        <td>
-            <form action="{{ route('mahasiswa.destroy',$Mahasiswa->nim) }}" method="POST">
-                <a class="btn btn-info" href="{{ route('mahasiswa.show',$Mahasiswa->nim) }}">Show</a>
-                <a class="btn btn-primary" href="{{ route('mahasiswa.edit',$Mahasiswa->nim) }}">Edit</a>
+ <<table class="table table-bordered">
+
+	<tr>
+		<th>No</th>
+		<th>Nim</th>
+		<th>Nama</th>
+		<th>Kelas</th>
+		<th>Jurusan</th>
+		<th>No_Handphone</th>
+		<th>Email</th>
+		<th>Tanggal Lahir</th>
+		<th width="280px">Action</th>
+	</tr>
+	@foreach($posts as $index => $mahasiswa)
+	<tr>
+		<td>{{$index + $posts->firstItem()}}</td>
+		<td>{{$mahasiswa->nim}}</td>
+		<td>{{$mahasiswa->nama}}</td>
+		<td>{{$mahasiswa->kelas}}</td>
+		<td>{{$mahasiswa->jurusan}}</td>
+		<td>{{$mahasiswa->no_handphone}}</td>
+		<td>{
+            <form action="{{ route('mahasiswa.destroy',['mahasiswa'=>$Mahasiswa->nim]) }}" method="POST">
+                <a class="btn btn-info" href="{{ route('mahasiswa.show',['mahasiswa'=>$Mahasiswa->nim]) }}">Show</a>
+                <a class="btn btn-primary" href="{{ route('mahasiswa.edit',['mahasiswa'=>$Mahasiswa->nim]) }}">Edit</a>
         @csrf
         @method('DELETE')
                 <button type="submit" class="btn btn-danger">Delete</button>
