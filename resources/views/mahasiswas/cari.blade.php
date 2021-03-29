@@ -3,7 +3,7 @@
 <div class="containermt-5">
 <div class="row justify-content-center align-items-center">
 <div class="card"style="width:24rem;">
-	<div class="card-header">Detail mahasiswa</div>
+	<div class="card-header">Hasil Cari Mahasiswa</div>
 <div class="card-body">
 <ul class="list-grouplist-group-flush">
 <li class="list-group-item">
