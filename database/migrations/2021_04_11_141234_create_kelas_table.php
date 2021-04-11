@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddEmailAndBirthDateMhs extends Migration
+class CreateKelasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddEmailAndBirthDateMhs extends Migration
      */
     public function up()
     {
-        Schema::table('mahasiswas', function (Blueprint $table) {
-            $table->string('email',50)->after('nama')->unique()->nullable();
-            $table->date('tanggal_lahir')->nullable();
+        Schema::create('kelas', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_kelas');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +27,6 @@ class AddEmailAndBirthDateMhs extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mahasiswas');
+        Schema::dropIfExists('kelas');
     }
 }
