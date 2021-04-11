@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
 use Illuminate\Support\Facades\DB;
+use App\Models\Kelas;
 class MahasiswaController extends Controller
 {
     /**
@@ -34,7 +35,9 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-        return view('mahasiswas.create');
+        //return view('mahasiswas.create');
+        $kelas = Kelas::all(); //mendapatkan data dari tabel kelas
+        return view('mahasiswas.create',['kelas' => $kelas]);
     }
 
     /**
@@ -47,7 +50,7 @@ class MahasiswaController extends Controller
     {
         $request->validate(['nim'=>'required',
         'nama'=>'required',
-        'kelas'=>'required',
+        'kelas_id'=>'required',
         'jurusan'=>'required',
         'no_handphone'=>'required',
         'email'=>'required',
@@ -56,7 +59,7 @@ class MahasiswaController extends Controller
         //fungsieloquentuntukmenambahdata
         Mahasiswa::create($request->all());
         //jikadataberhasilditambahkan,akankembalikehalamanutama
-        return redirect()->route('mahasiswas.index')->with('success','Mahasiswa Berhasil Ditambahkan');
+        return redirect()->route('mahasiswa.index')->with('success','Mahasiswa Berhasil Ditambahkan');
     }
 
     /**
@@ -80,7 +83,8 @@ class MahasiswaController extends Controller
     public function edit($nim)
     {
         $mahasiswa=Mahasiswa::find($nim);
-        return view('mahasiswas.edit',compact('mahasiswa'));
+        $kelas = Kelas::all();
+        return view('mahasiswas.edit',compact('mahasiswa', 'kelas'));
     }
 
     /**
@@ -94,14 +98,14 @@ class MahasiswaController extends Controller
     {
         $request->validate(['nim'=>'required',
         'nama'=>'required',
-        'kelas'=>'required',
+        'kelas_id'=>'required',
         'jurusan'=>'required',
         'no_handphone'=>'required',
         'email'=>'required',
         'tgl_lahir'=>'required'
         ]);
         Mahasiswa::find($nim)->update($request->all());
-        return redirect()->route('mahasiswas.index')->with('success','Mahasiswa Berhasil Diupdate');
+        return redirect()->route('mahasiswa.index')->with('success','Mahasiswa Berhasil Diupdate');
     }
 
     /**

@@ -28,7 +28,11 @@
 </div>
 <div class="form-group">
 <label for="Kelas">Kelas</label>
-<input type="Kelas"name="kelas"class="form-control"id="Kelas"aria-describedby="password">
+<select class="form-control" name="kelas_id">
+	@foreach($kelas as $k)
+	<option value="{{$k->id}}">{{$k->nama_kelas}}</option>
+	@endforeach
+</select>
 </div>
 <div class="form-group">
 <label for="Jurusan">
@@ -46,7 +50,7 @@ Jurusan
 </div>
 <div class="form-group">
 <label for="No_Handphone">Tgl Lahir</label>
-<input type="date"name="tanggal_lahir"class="form-control"id="No_Handphone"aria-describedby="No_Handphone">
+<input type="date"name="tgl_lahir"class="form-control"id="No_Handphone"aria-describedby="No_Handphone">
 </div>
 <button type="submit"class="btn btn-primary">Submit
 </button>
