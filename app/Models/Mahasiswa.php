@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Mahasiswa;
+use App\Models\Matakuliah;
 class Mahasiswa extends Model
 {
     //use HasFactory;
@@ -13,7 +14,7 @@ class Mahasiswa extends Model
     //protected $incerement = false;
     //protected $fillable = ['nim', 'nama', 'kelas', 'jurusan', 'no_handphone', 'email', 'tanggal_lahir'];
     protected $table='mahasiswas';
-    protected $primaryKey = 'nim';
+    //protected $primaryKey = 'nim';
 
     protected $fillable = [
         'nim',
@@ -28,6 +29,10 @@ class Mahasiswa extends Model
     public function kelas()
     {
         return $this->belongsTo(Kelas::class);
+    }
+    public function matakuliah()
+    {
+    	return $this->belongsToMany(Matakuliah::class)->withPivot('nilai');
     }
 }
 

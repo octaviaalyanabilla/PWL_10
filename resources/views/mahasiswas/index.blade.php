@@ -51,11 +51,13 @@ cari
 	<td>{{$mahasiswa->tanggal_lahir}}</td>
 	<td>
 		
-		<form action="{{route('mahasiswa.destroy',['mahasiswa'=>$mahasiswa->nim])}}"method="POST">
+		<form action="{{route('mahasiswa.destroy',['mahasiswa'=>$mahasiswa->id])}}"method="POST">
 
-		<a class="btn btn-info"href="{{route('mahasiswa.show',['mahasiswa'=>$mahasiswa->nim])}}">Show</a>
+		<a class="btn btn-info"href="{{route('mahasiswa.show',['mahasiswa'=>$mahasiswa->id])}}">Show</a>
 
-		<a class="btn btn-primary"href="{{route('mahasiswa.edit',['mahasiswa'=>$mahasiswa->nim])}}">Edit</a>
+		<a class="btn btn-primary"href="{{route('mahasiswa.edit',['mahasiswa'=>$mahasiswa->id])}}">Edit</a>
+
+		<a class="btn btn-warning"href="{{url('nilai/'.$mahasiswa->id)}}">Nilai</a>
 		@csrf
 		@method('DELETE')
 		<button type="submit"class="btn btn-danger">Delete</button>

@@ -136,6 +136,13 @@ class MahasiswaController extends Controller
         return view('mahasiswas.index',compact('posts'));
         */
     }
+    public function nilai($nim)
+    {
+        $mhs = Mahasiswa::find($nim);
+        //$jajal = $mhs->matakuliah;
+        //$kelas = $mhs->kelas->nama_kelas;
+         return view('mahasiswas.nilai',compact('mhs'));
+    }
 
 
 
