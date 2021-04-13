@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\CariController;
+use App\Http\Controllers\ArticleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,3 +21,4 @@ Route::get('/', function () {
 Route::resource('mahasiswa',MahasiswaController::class);
 Route::post('cari',[CariController::class,'search']);
 Route::get('nilai/{nim}',[MahasiswaController::class,'nilai']);
+Route::resource('articles', ArticleController::class);
