@@ -14,7 +14,7 @@
 @endforeach
 </ul></div>
 @endif
-<form method="post"action="{{route('mahasiswa.update',['mahasiswa'=>$mahasiswa->nim])}}"id="myForm">
+<form method="post" enctype="multipart/form-data" action="{{route('mahasiswa.update',['mahasiswa'=>$mahasiswa->id])}}"id="myForm">
 @csrf
 @method('PUT')
 <div class="form-group">
@@ -47,6 +47,13 @@
  <label for="No_Handphone">Tgl Lahir</label>
 <input type="date"name="tgl_lahir"class="form-control"id="no_handphone"value="{{$mahasiswa->tanggal_lahir
 }}"aria-describedby="No_Handphone">
+</div>
+<div class="form-group">
+	<label for="image">Foto</label>
+	<input type="file" class="form-control" required="required" name="foto" value="{{$mahasiswa->foto}}"
+	>
+</br>
+	<img width="150px" src="{{asset('storage/'.$mahasiswa->foto)}}">
 </div>
 <button type="submit"class="btn btn-primary">Submit</button>
 </form>

@@ -6,13 +6,10 @@
 			<h2>JURUSAN TEKNOLOGI INFORMASI-POLITEKNIK NEGERI MALANG</h2>
 		</div>
 		<p align="center">KARTU HASIL STUDI</p>
+		<p align="center">{{$mhs->nama}}</p>
 </div>
 </div>
-<br>
-<p>Nama : {{$mhs->nama}}</p>
-<p>Nim : {{$mhs->nim}}</p>
-<p>Jurusan : {{$mhs->jurusan}}</p>
-<p>Kelas : {{$mhs->kelas->nama_kelas}}</p>
+
 
 <table class="table table-bordered">
 
@@ -33,5 +30,4 @@
 </tr>
 @endforeach
 </table>
-<p align="center">	<a target="_blank" class="btn btn-danger btn-lg" href="{{url('mahasiswa/cetak_pdf/'.$mhs->id)}}">CETAK KE PDF</a> </p>
 @endsection

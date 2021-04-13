@@ -23,3 +23,4 @@ Route::post('cari',[CariController::class,'search']);
 Route::get('nilai/{nim}',[MahasiswaController::class,'nilai']);
 Route::resource('articles', ArticleController::class);
 Route::get('/article/cetak_pdf', [ArticleController::class, 'cetak_pdf']);
+Route::get('/mahasiswa/cetak_pdf/{id}',[MahasiswaController::class,'cetak_pdf']);
