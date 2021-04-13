@@ -3,8 +3,8 @@
 @section('content')
 <div class="container">
 <form action="/articles/{{$article->id}}" method="post" enctype="multipart/form-data">
-    @method('PUT')
 @csrf
+@method('PUT')
 <div class="form-group">
 <label for="title">Judul</label>
 <input type="text" class="form-control" required="required" name="title" value="{{$article->title}}"></br>
